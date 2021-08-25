@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row content">
+            <div class="col-sm">
+                <div class="well">
+                    <h3>Add Product</h3><br>
+                    <form action="/product/insert" method="get">
+                        ProductID : <input type="text" id="pid" name="pid"><br><br>
+                        ProductName : <input type="text" id="pname" name="pname"><br><br>
+                        Price : <input type="text" id="price" name="price"><br><br>
+                        <input type="submit" value="Submit">
+                    </form>
+                </div>
+            </div>
+    </div>
+</div>
+
+
+{% endblock %}

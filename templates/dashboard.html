@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="well" style="background-color: #339966; 
+            height: 80px; 
+            margin: 10px 0px 10px 0px;">
+
+    <div class="row">
+        <div class="col">
+            <h2 style="color: white;">Dashboard</h2>
+            <h4 style="color: whitesmoke;">สรุปผลการขาย</h4>
+        </div>
+        <div class="col" style="text-align: right;">
+        </div>
+    </div>
+
+</div>
+
+<div class="well" style="text-align: center;">
+                
+                <form action="/dashboard/search" method="post">
+                    &nbsp;<p class="fs-2">ค้นหาจากรหัสสาขา STORE_CODE</p>
+                    <input class="fs-4" type="text" id="STORE_CODE" name="STORE_CODE" placeholder="EX.00001">
+                    <input class="fs-4" type="submit" value="ตกลง">
+                </form>
+</div>
+
+<div class="well" style="background-color: #66CC99; 
+            height: 80px; 
+            margin: 10px 0px 10px 0px;">
+
+    <div class="row">
+        <div class="col">
+            <h2 style="color: white;">รหัสสาขา {{store_code}}</h2>
+            <h3 style="color: white;">ยอดขาย <span class="badge bg-warning text-dark">{{ amount }}&nbsp;$</span></h3>
+            
+            
+        </div>
+        <div class="col" style="text-align: right;">
+            
+        </div>
+    </div>
+
+</div>
+
+
+<div class="row">
+    <div class="col-sm-6">
+        <div class="card" style="border-radius: 10px;">
+            <div class="card-header">
+                <h2 style="margin: auto;">Line chart / แผนภูมิเส้น</h2>
+            </div>
+            <div class="card-body" style="margin: auto;">
+                <img width="545px" src="data:image/png;base64, {{ plot1 }}">
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="card" style="border-radius: 10px;">
+            <div class="card-header">
+                <h2 style="margin: auto;">Bar chart / แผนภูมิแท่ง</h2>
+            </div>
+            <div class="card-body" style="margin: auto;">
+                <img width="545px" src="data:image/png;base64, {{ plot2 }}">
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>
+<img class="hidden" src="image.gif" onerror="activeDash()">
+
+{% endblock %}

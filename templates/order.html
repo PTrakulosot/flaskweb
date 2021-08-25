@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="well" style="background-color: #339966; 
+            height: 80px; 
+            margin: 10px 0px 10px 0px; 
+            position: sticky; 
+            top: 10px;">
+    <h2 style="color: white;">{{tbname}} Table</h2>
+    <h4 style="color: whitesmoke;">ค้นหาคำสั่งซื้อจากรหัสลูกค้า</h4>
+</div>
+
+<div class="container-fluid">
+        <form id="frm1" action="/order" method="POST">
+                <div style="font-size: 22px; text-align: end;">
+                    รหัสลูกค้า :
+                    <input style="border-radius: 10px; border-color: rgba(63, 63, 63, 0.576);" type="text"
+                        id="CUST_CODE" name="CUST_CODE" value="" placeholder=" EX.0000167145">
+                    <button class="btn btn-light fs-3" type="submit" value=""><i style="size: 200%;"
+                            class="fas fa-search"></i> กดเพื่อค้นหา</button>
+                </div>
+                <br>
+                <div style="text-align: center;">
+
+
+
+                </div>
+                <br>
+                <div class="well">
+                    <div class="table-responsive">
+                        <table class="table table-sm table-borderless mb-0">
+                            <thead class="thead-dark fs-4">
+                                <tr>
+                                    <th>Number</th>
+                                    <th>PROD_CODE</th>
+                                    <th>CUST_CODE</th>
+                                    <th>STORE_CODE</th>
+                                    <th>SHOP_DATE</th>
+                                </tr>
+                            </thead>
+                            <tbody class="fs-5">
+                                {% for row in rows %}
+                                <tr>
+                                    <th scope="row">{{ loop.index }}</th>
+                                    <td>{{ row[0] }}</td>
+                                    <td>{{ row[1] }}</td>
+                                    <td>{{ row[2] }}</td>
+                                    <td>{{ row[3] }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+        </form>
+        <div class="row">
+            <div class="col-5" style="text-align: left;">
+                <form action="/order/revious" method="POST">
+                        <input class="btn btn-outline-light fs-2" type="submit" value="ก่อนหน้า / Previous" style="border-color: black;color: black;border-radius: 15px;" >&nbsp;
+                        <input type="text" id="current_page" name="current_page" value="{{page}}" hidden style="text-align: center;">
+                </form>
+            </div>
+            <div class="col-2" style="text-align: center;">
+                <input class="fs-1" type="text" id="current_page" name="current_page" value="หน้าที่ {{page}}" readonly style="text-align: center; border: 0;">
+                &nbsp;
+            </div>
+            <div class="col-5" style="text-align: right;">
+                <form action="/order/next" method="POST">
+                        <input type="text" id="current_page" name="current_page" value="{{page}}" hidden style="text-align: center;">
+    
+                        <input class="btn btn-outline-light fs-2" type="submit" value="ถัดไป / Next" style="border-color: black;color: black;border-radius: 15px;">
+                </form>
+            </div>
+        </div>
+
+
+
+
+
+
+</div>
+<img class="hidden" src="image.gif" onerror="activeOrders()">
+
+{% endblock %}

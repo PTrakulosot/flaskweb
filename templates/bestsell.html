@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="well" style="background-color: #339966; 
+            height: 80px; 
+            margin: 10px 0px 10px 0px; 
+            position: sticky; 
+            top: 10px;">
+    <h2 style="color: white;">Sales</h2>
+    <h4 style="color: whitesmoke;">ยอดขายแบ่งตามสาขา</h4>
+</div>
+
+<div class="container-fluid">
+    <div class="row content">
+        <form action="/search/bestsell" method="POST">
+            <div class="col-sm">
+                <div class="well">
+                    <center>
+                        <h3>ค้นหาข้อมูลจากฐานข้อมูลด้วยการ 
+                            <span style="border-radius: 20px;" class="badge bg-warning text-dark">JOIN</span>
+                            จากตาราง 
+                            <span style="border-radius: 20px;" class="badge bg-info text-dark">orders</span> 
+                            และตาราง 
+                            <span style="border-radius: 20px;" class="badge bg-primary">{{tbname}}</span>
+                        </h3>
+                    </center>
+                </div>
+                <div style="font-size: 22px; text-align: center;">
+                    <div class="row">
+                        <div class="col-4">
+                            วัน/เดือน/ปี:
+                            <select name="SHOP_DATE" id="SHOP_DATE" style="width: 181px;border-radius: 10px; border-color: rgba(63, 63, 63, 0.576);">
+                                <option value="" selected hidden> SELECT DATE</option>
+                                <option value="20060410"> 2006/04/10</option>
+                                <option value="20060411"> 2006/04/11</option>
+                                <option value="20060412"> 2006/04/12</option>
+                                <option value="20060413"> 2006/04/13</option>
+                                <option value="20060414"> 2006/04/14</option>
+                                <option value="20060415"> 2006/04/15</option>
+                                <option value="20060416"> 2006/04/16</option>
+                            </select>
+                        </div>
+                        <div class="col-4">
+                            ช่วงเวลา:
+                            <select name="SHOP_HOUR" id="SHOP_DATE" style="width: 181px;border-radius: 10px; border-color: rgba(63, 63, 63, 0.576);">
+                                <option value="" selected hidden> SELECT HOUR</option>
+                                <option value="8"> 08:00:00</option>
+                                <option value="9"> 09:00:00</option>
+                                <option value="10"> 10:00:00</option>
+                                <option value="11"> 11:00:00</option>
+                                <option value="12"> 12:00:00</option>
+                                <option value="13"> 13:00:00</option>
+                                <option value="14"> 14:00:00</option>
+                                <option value="15"> 15:00:00</option>
+                                <option value="16"> 16:00:00</option>
+                                <option value="17"> 17:00:00</option>
+                                <option value="18"> 18:00:00</option>
+                                <option value="19"> 19:00:00</option>
+                                <option value="20"> 20:00:00</option>
+                                <option value="21"> 21:00:00</option>
+                            </select>
+                        </div>
+                        <div class="col-4">
+                            รหัสร้านค้า:
+                            <input style="width: 181px;border-radius: 10px; border-color: rgba(63, 63, 63, 0.576);" type="text" id="STORE_CODE" name="STORE_CODE" value=""
+                                placeholder=" EX.00001">
+
+                            <!-- <input type="submit" value=" FIND"> -->
+
+ <button class="btn btn-light fs-3" type="submit" value=""><i style="size: 200%;"
+                            class="fas fa-search"></i> กดเพื่อค้นหา</button>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+                <br>
+                <div class="well">
+                    <div class="table-responsive">
+                        <table class="table table-sm table-borderless mb-0">
+                            <thead class="thead-dark fs-4">
+                                <tr>
+                                    <th style="text-align: center;">{{ head0 }}</th>
+                                    <th style="text-align: center;">{{ head1 }}</th>
+                                    <th style="text-align: center;">{{ head2 }}</th>
+                                    <th style="text-align: center;">{{ head3 }}</th>
+                                    <th style="text-align: center;">{{ head4 }}</th>
+                                    <th style="text-align: center;">{{ head5 }}</th>
+                                    <th style="text-align: center;">{{ head6 }}</th>
+                                </tr>
+                            </thead>
+                            <tbody class="fs-5">
+                                {% for row in rows %}
+                                <tr>
+                                    <th scope="row" style="text-align: center;">{{ loop.index }}</th>
+                                    <td style="text-align: center;">{{ row[0] }}</td>
+                                    <td style="text-align: center;">{{ row[1] }}</td>
+                                    <td style="text-align: center;">{{ row[2] }}</td>
+                                    <td style="text-align: center;">{{ row[3] }}</td>
+                                    <td style="text-align: center;">{{ row[4] }}</td>
+                                    <td style="text-align: center;">{{ row[5] }}</td>
+                                    <td style="text-align: center;">{{ row[6] }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<img class="hidden" src="image.gif" onerror="activeSales()">
+
+{% endblock %}

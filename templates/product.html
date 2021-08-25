@@ -1,0 +1,192 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="well" style="background-color: #339966; 
+            height: 80px; 
+            margin: 10px 0px 10px 0px; 
+            position: sticky; 
+            top: 10px;">
+    <h2 style="color: white;">{{tbname}} Table</h2>
+    <h4 style="color: whitesmoke;">จัดการตารางสินค้า</h4>
+</div>
+
+<div class="container-fluid">
+        <form action="/product/form" method="POST">
+                <div class="well">
+                    <center>
+                        <h3>สร้างตารางเพิ่มเติมใน
+                            <span style="border-radius: 20px;" class="badge bg-dark">SQL Lite </span>
+                            ให้ตาราง
+                            <span style="border-radius: 20px;" class="badge bg-warning text-dark">{{tbname}}</span>
+
+
+
+                        </h3>
+
+                        <!-- <a class="btn btn-light fs-3" data-toggle="modal" href="#myModal">เพิ่มสินค้าคลิก&nbsp;
+                            <i class="fas fa-plus-circle" style="color: limegreen;"></i>
+                        </a> -->
+
+                        <a class="btn btn-light fs-3 addProduct" data-toggle="modal" href="#" data-target="#addModal" data-id="" data-name="" data-price=""
+                        style="border-radius: 10px; border-color: rgba(63, 63, 63, 0.576);">
+                            เพิ่มสินค้าคลิก&nbsp;<i class="fas fa-plus-circle" style="color: limegreen;"></i>
+                        </a>
+                    </center>
+                </div>
+                <div style="font-size: 22px; text-align: end;">
+                    รหัสสินค้า :
+                    <input style="border-radius: 10px; border-color: rgba(63, 63, 63, 0.576);" type="text" id="PROD_ID"
+                        name="PROD_ID" value="" placeholder=" PROD_ID">
+                    <button class="btn btn-light fs-3" type="submit" value=""><i style="size: 200%;"
+                            class="fas fa-search"></i> กดเพื่อค้นหา</button>
+                </div>
+                <br>
+                <div class="well">
+                    <div class="table-responsive">
+                        <table class="table table-sm table-borderless mb-0">
+                            <thead class="thead-dark fs-3">
+                                <tr>
+                                    <th>Number</th>
+                                    <th>PROD_ID</th>
+                                    <th>PROD_NAME</th>
+                                    <th>PRICE</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody class="fs-4">
+                                {% for row in rows %}
+                                <tr>
+                                    <th scope="row">{{ loop.index }}</th>
+                                    <td>{{ row[0] }}</td>
+                                    <td>{{ row[1] }}</td>
+                                    <td>{{ row[2] }}</td>
+
+                                    <td><a data-toggle="modal" href="#" data-target="#editModal"
+                                            class="editProduct" data-id="{{ row[0] }}" data-name="{{ row[1] }}"
+                                            data-price="{{ row[2] }}"><i class="fas fa-pen"
+                                                style="color: rgba(54, 101, 255, 0.898);"></i></a></td>
+                                    <td><a data-toggle="modal" href="#" data-target="#delModal" class="delProduct"
+                                            data-id="{{ row[0] }}" data-name="{{ row[1] }}" data-price="{{ row[2] }}"><i
+                                                class="fas fa-trash" style="color: rgba(255, 0, 0, 0.888);"></i></a></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            
+        </form>
+        <div class="row">
+            <div class="col-5" style="text-align: left;">
+                <form action="/product/revious" method="POST">
+                        <input class="btn btn-outline-light fs-2" type="submit" value="ก่อนหน้า / Previous" style="border-color: black;color: black;border-radius: 15px;" >&nbsp;
+                        <input type="text" id="current_page" name="current_page" value="{{pro_page}}" hidden style="text-align: center;">
+                </form>
+            </div>
+            <div class="col-2" style="text-align: center;">
+                <input class="fs-1" type="text" id="current_page" name="current_page" value="หน้าที่ {{pro_page}}" readonly style="text-align: center; border: 0;">
+                &nbsp;
+            </div>
+            <div class="col-5" style="text-align: right;">
+                <form action="/product/next" method="POST">
+                        <input type="text" id="current_page" name="current_page" value="{{pro_page}}" hidden style="text-align: center;">
+    
+                        <input class="btn btn-outline-light fs-2" type="submit" value="ถัดไป / Next" style="border-color: black;color: black;border-radius: 15px;">
+                </form>
+            </div>
+        </div>
+</div>
+
+<div class="modal fade" id="addModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" >
+
+        <!-- Modal content-->
+        <div class="modal-content" style="border-radius: 15px;">
+
+            <div class="modal-header text-dark">
+                <h3 class="modal-title" id="exampleModalLabel"><strong>Add Product </strong>/ เพิ่มสินค้า</h3>
+            </div>
+
+            <form action="/product/insert" method="post">
+                <div class="modal-body" style="font-size: 18px; font-weight: bolder">
+                    <div style="text-align: right;margin: 10px 18% 0px 0px;">
+                        ProductID :
+                        <input type="text" id="pid" name="pid"><br><br>
+                        ProductName :
+                        <input type="text" id="pname" name="pname"><br><br>
+                        Price :
+                        <input type="text" id="price" name="price"><br><br>
+                    </div>
+                </div>
+
+                <div class="modal-footer" style="text-align: center;">
+                    <button type="submit" class="btn btn-success fs-3">ยืนยัน</button>
+                    <button type="button" class="btn btn-danger fs-3" data-dismiss="modal">ยกเลิก</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="editModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <!-- Modal content-->
+        <div class="modal-content" style="border-radius: 15px;">
+            <div class="modal-header text-dark">
+                <h3 class="modal-title" id="exampleModalLabel"><strong>Edit Product </strong>/ แก้ไขสินค้า</h3>
+            </div>
+            <form action="/product/edit" method="post">
+                <div class="modal-body" style="font-size: 18px; font-weight: bolder ">
+                    <div style="text-align: right;margin: 10px 18% 0px 0px;">
+                        ProductID :
+                        <input type="text" id="pid" name="pid" value=""><br><br>
+                        ProductName :
+                        <input type="text" id="pname" name="pname" value=""><br><br>
+                        Price :
+                        <input type="text" id="price" name="price" value=""><br><br>
+                    </div>
+                </div>
+                <div class="modal-footer" style="text-align: center;">
+                    <input type="submit" class="btn btn-success fs-3" value="บันทึกข้อมูล">
+                    <button type="button" class="btn btn-danger fs-3" data-dismiss="modal">ยกเลิก</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="delModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+
+        <!-- Modal content-->
+        <div class="modal-content" style="border-radius: 15px;">
+
+            <div class="modal-header text-dark">
+                <h3 class="modal-title" id="exampleModalLabel"><strong>Delete Product </strong>/ ลบสินค้า</h3>
+            </div>
+
+            <form action="/product/delete" method="post">
+                <div class="modal-body" style="font-size: 18px; font-weight: bolder">
+                    <div style="text-align: right;margin: 10px 18% 0px 0px;">
+                        ProductID :
+                        <input type="text" id="pid" name="pid" value="" style="background-color: rgba(155, 155, 155, 0.755);" readonly ><br><br>
+                        ProductName :
+                        <input type="text" id="pname" name="pname" value="" style="background-color: rgba(155, 155, 155, 0.755);" readonly ><br><br>
+                        Price :
+                        <input type="text" id="price" name="price" value="" style="background-color: rgba(155, 155, 155, 0.755);" readonly ><br><br>
+                    </div>
+                </div>
+
+                <div class="modal-footer" style="text-align: center;">
+                    <input type="submit" class="btn btn-danger fs-3" value="ลบข้อมูล" onclick="msgAlert()">
+                    <button type="button" class="btn btn-secondary fs-3" data-dismiss="modal">ยกเลิก</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+<img class="hidden" src="image.gif" onerror="activeProducts()">
+{% endblock %}
